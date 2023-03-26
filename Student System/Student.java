@@ -12,9 +12,11 @@ import java.util.Map;
 
 public class Student extends JFrame {
     private Person person;
-    //private String programme;
-    //private List<Course> courses;
-    //private Map<Course, Score> scores;
+    private String name;
+    private String program;
+    private String regNo;
+    private List<Course> courses;
+    private Map<Course, Score> scores;
     private JPanel studentPanel;
     private JLabel studentNameLabel;
     private JLabel regNoLabel;
@@ -32,13 +34,13 @@ public class Student extends JFrame {
 
         studentPanel = new JPanel();
         studentPanel.setLayout(new BoxLayout(studentPanel, BoxLayout.Y_AXIS));
-        studentNameLabel = new JLabel("Name:");
+        studentNameLabel = new JLabel("Name:" + name);
         studentPanel.add(studentNameLabel);
 
-        regNoLabel = new JLabel("Reg Number:");
+        regNoLabel = new JLabel("Reg Number:" + regNo);
         studentPanel.add(regNoLabel);
 
-        programLabel = new JLabel("Your Program:");
+        programLabel = new JLabel("Your Program:" + program);
         studentPanel.add(programLabel);
 
         studentfinacialButton = new JButton("View financials");
@@ -82,10 +84,10 @@ public class Student extends JFrame {
         setVisible(true);
     }
 
-    /*public Student(String name, int age, String regNo, String programme) {
+    public Student(String name, int age, String regNo, String program) {
         this.person = new Person(name, age);
         this.regNo = regNo;
-        this.programme = programme;
+        this.program = program;
         this.courses = new ArrayList<>();
         this.scores = new HashMap<>();
     }
@@ -95,7 +97,7 @@ public class Student extends JFrame {
     }
 
     public String getProgramme() {
-        return programme;
+        return program;
     }
 
     public void allocateCourse(Course course) {
@@ -113,15 +115,14 @@ public class Student extends JFrame {
     }
 
     public Score getCourseScore(Course course) {
-        // Check if the student is enrolled in the specified course
+
         if (!courses.contains(course)) {
             throw new IllegalArgumentException("Student not enrolled in course.");
         }
 
-        // Retrieve the score associated with  course
         Score score = scores.get(course);
 
-        // If the score object doesn't exist, create a default one with 0 marks
+
         if (score == null) {
             score = new Score();
         }
@@ -131,6 +132,6 @@ public class Student extends JFrame {
     public String[][] getResult(){
 
         return getResult();
-    }*/
+    }
 
 }

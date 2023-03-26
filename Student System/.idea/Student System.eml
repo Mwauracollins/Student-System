@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" jdk="19" jdk_type="JavaSDK">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="mariadb-java-client-3.1.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/mariadb-java-client-3.1.3.jar!/"/>
+	</lib>
+	<lib name="pdfbox-app-3.0.0-alpha3.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/pdfbox-app-3.0.0-alpha3.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/pdfbox-app-3.0.0-alpha3.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pdfbox-app-3.0.0-alpha3.jar!/"/>
+	</lib>
+	<lib name="fontbox-3.0.0-alpha3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/fontbox-3.0.0-alpha3.jar!/"/>
+	</lib>
+</component>
