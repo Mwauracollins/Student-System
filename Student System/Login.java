@@ -89,6 +89,10 @@ public class Login extends JFrame {
                 isValid = true;
             }
 
+            else{
+                JOptionPane.showMessageDialog(null,"Invalid Credentials!");
+                System.exit(0);            }
+
             rs.close();
             stmt.close();
             conn.close();
@@ -97,4 +101,4 @@ public class Login extends JFrame {
         }
         return isValid;
     }
-}
+
