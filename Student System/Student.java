@@ -60,7 +60,7 @@ public class Student extends JFrame {
             // Prepare the SQL query
             String sql = "SELECT name, regNo, program FROM student WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, 123); // replace 123 with the actual ID of the student
+            stmt.setInt(1, 123);
 
             // Execute the query and retrieve the results
             ResultSet rs = stmt.executeQuery();
