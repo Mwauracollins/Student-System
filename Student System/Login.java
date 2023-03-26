@@ -15,7 +15,7 @@ public class Login extends JFrame {
     private JLabel registerLabel;
     private JButton registerButton;
 
-    public Login(){
+    public Login() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.BLACK);
@@ -48,7 +48,7 @@ public class Login extends JFrame {
                 String passwrd = passwrdField.getText();
 
                 //check if details are correct/valid
-                if (authenticateUser(regNo, passwrd)){
+                if (authenticateUser(regNo, passwrd)) {
                     Homepage homepagewindow = new Homepage();
                     homepagewindow.setVisible(true);
                     dispose();  //close login
@@ -87,11 +87,10 @@ public class Login extends JFrame {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 isValid = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Credentials!");
+                System.exit(0);
             }
-
-            else{
-                JOptionPane.showMessageDialog(null,"Invalid Credentials!");
-                System.exit(0);            }
 
             rs.close();
             stmt.close();
@@ -101,4 +100,4 @@ public class Login extends JFrame {
         }
         return isValid;
     }
-
+}
