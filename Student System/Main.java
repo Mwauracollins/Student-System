@@ -1,5 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        Homepage login = new Homepage();
+        Login login = new Login();
     }
 }
