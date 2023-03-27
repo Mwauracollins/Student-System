@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,6 +25,7 @@ public class Student extends JFrame {
     private JLabel programLabel;
     private JDBC jdbc;
     private JButton studentfinacialButton;
+    private JButton scoresButton;
 
 
     public Student() {
@@ -62,22 +65,29 @@ public class Student extends JFrame {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, 123);
 
-            // Execute the query and retrieve the results
+
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                // Set the student details in the labels
+
                 studentNameLabel.setText("Name: " + rs.getString("name"));
                 regNoLabel.setText("Reg Number: " + rs.getString("regNo"));
                 programLabel.setText("Your Program: " + rs.getString("program"));
             }
 
-            // Close the database resources
+
             rs.close();
             stmt.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        scoresButton = new JButton("View results");
+        studentPanel.add(scoresButton);
+        scoresButton.addActionListener(e -> {
+            Score scorewindow = new Score();
+            scorewindow.setVisible(true);
+        });
 
         add(studentPanel);
         pack();

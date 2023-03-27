@@ -31,7 +31,7 @@ public class Financial extends JFrame {
         hostelsButton = new JButton("Hostels");
         financialPanel.add(hostelsButton);
         hostelsButton.addActionListener(e -> {
-            HostelDetails hostelDetailsWindow = new HostelDetails();
+            HostelBooking hostelDetailsWindow = new HostelBooking();
             hostelDetailsWindow.setVisible(true);
         });
 

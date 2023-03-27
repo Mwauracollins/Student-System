@@ -1,54 +1,68 @@
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.rendering.PDFRenderer;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class FeeStructure extends JFrame {
-    private File pdfFile;
-    private PDDocument pdfDocument;
-    private PDFRenderer pdfRenderer;
 
-    public FeeStructure(File pdfFile) throws IOException {
-        this.pdfFile = pdfFile;
-        pdfDocument = PDDocument.load(pdfFile);
-        pdfRenderer = new PDFRenderer(pdfDocument);
+    private JPanel feeStructurePanel;
+    private JTable feeStructureTable;
 
+    private Connection conn;
+    private Statement stmt;
+    private ResultSet rs;
+
+    private String[] columnNames = {"Class", "Semester", "Fee Amount"};
+
+    public FeeStructure() {
         setTitle("Fee Structure");
-        setSize(800, 600);
-        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        feeStructurePanel = new JPanel();
 
-        add(new PDFRendererComponent(), BorderLayout.CENTER);
+        try {
+            conn = new JDBC().connection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM feestructure");
 
-        pack();
-        setVisible(true);
-    }
-
-    private class PDFRendererComponent extends JComponent {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            try {
-                // Render the PDF page
-                BufferedImage image = pdfRenderer.renderImage(0);
-
-                // Scale the image to fit the window
-                double scaleX = (double) getWidth() / image.getWidth();
-                double scaleY = (double) getHeight() / image.getHeight();
-                double scale = Math.min(scaleX, scaleY);
-                int width = (int) (image.getWidth() * scale);
-                int height = (int) (image.getHeight() * scale);
-
-                // Draw the image on the component
-                g.drawImage(image, 0, 0, width, height, null);
-            } catch (IOException e) {
-                e.printStackTrace();
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+            while(rs.next()) {
+                String cls = rs.getString("class");
+                String term = rs.getString("term");
+                int amount = rs.getInt("amount");
+                Object[] row = {cls, term, amount};
+                model.addRow(row);
             }
+
+            feeStructureTable = new JTable(model);
+
+
+            JTableHeader header = feeStructureTable.getTableHeader();
+            header.setOpaque(false);
+            header.setBackground(new Color(230, 230, 230));
+            header.setForeground(new Color(51, 51, 51));
+            header.setBorder(new LineBorder(Color.BLACK));
+            feeStructureTable.setTableHeader(header);
+
+
+            JScrollPane scrollPane = new JScrollPane(feeStructureTable);
+            scrollPane.setBorder(new LineBorder(Color.BLACK));
+
+            feeStructurePanel.add(scrollPane);
+            add(feeStructurePanel);
+            pack();
+            setVisible(true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
