@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Student extends JFrame {
+    public String getName;
     private Person person;
     private String name;
     private String program;
@@ -100,6 +101,11 @@ public class Student extends JFrame {
         this.program = program;
         this.courses = new ArrayList<>();
         this.scores = new HashMap<>();
+    }
+
+
+    public String getName(){
+        return name;
     }
 
     public String getRegNo() {

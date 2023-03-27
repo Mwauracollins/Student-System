@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +23,7 @@ public class Login extends JFrame {
         loginPanel = new JPanel();
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
 
-        //Add regfiels and label
+        //Add reg fields and label
         regNoLabel = new JLabel("Registration number");
         regNoLabel.setIcon(new ImageIcon("Icons/regNo.png"));
         loginPanel.add(regNoLabel);
@@ -48,8 +47,9 @@ public class Login extends JFrame {
                 String passwrd = passwrdField.getText();
 
                 //check if details are correct/valid
-                if (authenticateUser(regNo, passwrd)) {
-                    Homepage homepagewindow = new Homepage();
+                Student student = authenticateUser(regNo, passwrd);
+                if (student != null) {
+                    Homepage homepagewindow = new Homepage(student);
                     homepagewindow.setVisible(true);
                     dispose();  //close login
                 } else {
@@ -63,20 +63,24 @@ public class Login extends JFrame {
         loginPanel.add(registerLabel);
         registerButton = new JButton("Register");
         loginPanel.add(registerButton);
-        registerButton.addActionListener(e -> {
-            Register registerwindow = new Register();
-            registerwindow.setVisible(true);
-
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Register registerwindow = new Register();
+                registerwindow.setVisible(true);
+            }
         });
 
         add(loginPanel);
         pack();
+        setLocationRelativeTo(null); //center window
         setVisible(true);
     }
 
     // Method to authenticate user
-    private boolean authenticateUser(String regNo, String passwrd) {
-        boolean isValid = false;
+    private Student authenticateUser(String regNo, String passwrd) {
+        Student student = null;
+
         try {
             Connection conn = new JDBC().connection();
 
@@ -86,10 +90,7 @@ public class Login extends JFrame {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                isValid = true;
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid Credentials!");
-                System.exit(0);
+                student = new Student(rs.getString("name"), rs.getInt("age"), rs.getString("regNo"), rs.getString("program"));
             }
 
             rs.close();
@@ -98,6 +99,6 @@ public class Login extends JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return isValid;
+        return student;
     }
 }

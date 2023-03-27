@@ -8,14 +8,16 @@ public class Homepage extends JFrame {
     private JButton viewBooks;
     private JButton viewLecturer;
     private JButton studentDetails;
+    private JLabel welcomeLabel;
 
-    public Homepage(){
+    public Homepage(Student student){
         setTitle("Homepage");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         homePanel = new JPanel();
         homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
 
+        welcomeLabel = new JLabel("Welcome," + student.getName);
         studentDetails = new JButton("Your Details");
         homePanel.add(studentDetails);
         studentDetails.addActionListener(e -> {

@@ -76,37 +76,8 @@ public class Register extends JFrame {
                 }
             }
         });
-        ((AbstractDocument) phoneNoField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            @Override
-            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                    throws BadLocationException {
-                StringBuilder builder = new StringBuilder(text);
-                for (int i = builder.length() - 1; i >= 0; i--) {
-                    char c = builder.charAt(i);
-                    if (!(c == '+' || Character.isDigit(c))) {
-                        builder.deleteCharAt(i);
-                    }
-                }
-                String phoneNumber = builder.toString();
-                if (phoneNumber.startsWith("+254") && phoneNumber.length() <= 13) {
-                    super.replace(fb, offset, length, phoneNumber, attrs);
-                } else if (phoneNumber.startsWith("0") && phoneNumber.length() <= 10) {
-                    phoneNumber = "+254" + phoneNumber.substring(1);
-                    super.replace(fb, offset, length, phoneNumber, attrs);
-                }
-            }
 
-            @Override
-            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
-                    throws BadLocationException {
-                replace(fb, offset, 0, string, attr);
-            }
 
-            @Override
-            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-                replace(fb, offset, length, "", null);
-            }
-        });
 
 
 
