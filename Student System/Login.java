@@ -44,7 +44,7 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String regNo = regNoField.getText();
-                String passwrd = passwrdField.getText();
+                String passwrd = new String(passwrdField.getPassword());
 
                 //check if details are correct/valid
                 Student student = authenticateUser(regNo, passwrd);
